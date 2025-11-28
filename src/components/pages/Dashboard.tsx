@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Building2, Users, TrendingUp, MapPin, Activity } from 'lucide-react';
-import { mockBars, mockUsers, mockRecentActivities, mockRecentLocations } from '../../utils/mockData';
+import { mockVenues, mockUsers, mockRecentActivities, mockRecentLocations, venueCategories } from '../../utils/mockData';
 import { Badge } from '../ui/badge';
 
 export function Dashboard() {
-  const totalBars = mockBars.length;
+  const totalVenues = mockVenues.length;
   const totalUsers = mockUsers.length;
   const activeUsers = mockUsers.filter(u => u.active).length;
   const totalVotes = mockUsers.reduce((sum, user) => sum + user.totalVotes, 0);
@@ -21,12 +21,12 @@ export function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm text-gray-500">Total Bars</CardTitle>
+            <CardTitle className="text-sm text-gray-500">Total Venues</CardTitle>
             <Building2 className="w-4 h-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-gray-900">{totalBars}</div>
-            <p className="text-xs text-gray-500 mt-1">Registered venues</p>
+            <div className="text-gray-900">{totalVenues}</div>
+            <p className="text-xs text-gray-500 mt-1">Across {venueCategories.length} categories</p>
           </CardContent>
         </Card>
 
@@ -71,7 +71,7 @@ export function Dashboard() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5 text-blue-600" />
-              <CardTitle>Recent New Locations</CardTitle>
+              <CardTitle>Recent New Venues</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
@@ -82,7 +82,10 @@ export function Dashboard() {
                     <Building2 className="w-5 h-5 text-blue-600" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-gray-900 truncate">{location.barName}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-gray-900 truncate">{location.venueName}</p>
+                      <Badge variant="outline" className="text-xs">{location.subcategory}</Badge>
+                    </div>
                     <p className="text-sm text-gray-500 truncate">{location.location}</p>
                     <p className="text-xs text-gray-400 mt-1">
                       Added by {location.addedBy} • {location.timestamp}
@@ -120,7 +123,7 @@ export function Dashboard() {
                         {activity.action}
                       </Badge>
                     </p>
-                    <p className="text-sm text-gray-500 truncate">{activity.barName}</p>
+                    <p className="text-sm text-gray-500 truncate">{activity.venueName}</p>
                     <p className="text-xs text-gray-400 mt-1">{activity.timestamp}</p>
                   </div>
                 </div>

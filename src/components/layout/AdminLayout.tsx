@@ -14,7 +14,7 @@ import { Header } from './Header';
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: Building2, label: 'Bars', path: '/bars' },
+  { icon: Building2, label: 'Venues', path: '/venues' },
   { icon: Users, label: 'Users', path: '/users' },
   { icon: Megaphone, label: 'Advertisement', path: '/advertisement' },
   { icon: Settings, label: 'Settings', path: '/settings' },

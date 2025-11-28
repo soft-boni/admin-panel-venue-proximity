@@ -5,14 +5,90 @@ export const DEMO_CREDENTIALS = {
   twoFactorCode: '123456'
 };
 
-// Mock Bars Data
-export const mockBars = [
+// Venue Categories and Subcategories
+export const venueCategories = [
+  {
+    id: 'entertainment',
+    name: 'Entertainment',
+    subcategories: [
+      { id: 'bars', name: 'Bars' },
+      { id: 'nightclubs', name: 'Nightclubs' },
+      { id: 'live-music', name: 'Live Music Venues' },
+      { id: 'comedy-clubs', name: 'Comedy Clubs' },
+      { id: 'theaters', name: 'Theaters' },
+      { id: 'casinos', name: 'Casinos' },
+    ]
+  },
+  {
+    id: 'food-dining',
+    name: 'Food & Dining',
+    subcategories: [
+      { id: 'restaurants', name: 'Restaurants' },
+      { id: 'cafes', name: 'Cafés' },
+      { id: 'fast-food', name: 'Fast Food' },
+      { id: 'food-trucks', name: 'Food Trucks' },
+      { id: 'bakeries', name: 'Bakeries' },
+      { id: 'fine-dining', name: 'Fine Dining' },
+    ]
+  },
+  {
+    id: 'sports-recreation',
+    name: 'Sports & Recreation',
+    subcategories: [
+      { id: 'gyms', name: 'Gyms & Fitness Centers' },
+      { id: 'sports-bars', name: 'Sports Bars' },
+      { id: 'bowling', name: 'Bowling Alleys' },
+      { id: 'golf', name: 'Golf Courses' },
+      { id: 'pools', name: 'Swimming Pools' },
+      { id: 'recreation-centers', name: 'Recreation Centers' },
+    ]
+  },
+  {
+    id: 'shopping',
+    name: 'Shopping',
+    subcategories: [
+      { id: 'malls', name: 'Shopping Malls' },
+      { id: 'boutiques', name: 'Boutiques' },
+      { id: 'markets', name: 'Markets' },
+      { id: 'outlets', name: 'Outlet Stores' },
+      { id: 'bookstores', name: 'Bookstores' },
+      { id: 'grocery', name: 'Grocery Stores' },
+    ]
+  },
+  {
+    id: 'wellness',
+    name: 'Wellness & Beauty',
+    subcategories: [
+      { id: 'spas', name: 'Spas' },
+      { id: 'salons', name: 'Hair Salons' },
+      { id: 'yoga', name: 'Yoga Studios' },
+      { id: 'massage', name: 'Massage Centers' },
+      { id: 'wellness-centers', name: 'Wellness Centers' },
+    ]
+  },
+  {
+    id: 'services',
+    name: 'Services',
+    subcategories: [
+      { id: 'banks', name: 'Banks' },
+      { id: 'post-office', name: 'Post Offices' },
+      { id: 'libraries', name: 'Libraries' },
+      { id: 'coworking', name: 'Co-working Spaces' },
+      { id: 'car-services', name: 'Car Services' },
+    ]
+  },
+];
+
+// Mock Venues Data (previously mockBars)
+export const mockVenues = [
   {
     id: '1',
     name: 'The Blue Moon Bar',
     location: '123 Main St, New York, NY 10001',
     lat: 40.7489,
     lng: -73.9680,
+    category: 'entertainment',
+    subcategory: 'bars',
     todayOpenVotes: 45,
     todayCloseVotes: 12,
     status: 'open' as const,
@@ -24,6 +100,8 @@ export const mockBars = [
     location: '456 Park Ave, New York, NY 10022',
     lat: 40.7614,
     lng: -73.9776,
+    category: 'entertainment',
+    subcategory: 'bars',
     todayOpenVotes: 8,
     todayCloseVotes: 34,
     status: 'closed' as const,
@@ -35,6 +113,8 @@ export const mockBars = [
     location: '789 Broadway, New York, NY 10003',
     lat: 40.7336,
     lng: -73.9910,
+    category: 'entertainment',
+    subcategory: 'bars',
     todayOpenVotes: 67,
     todayCloseVotes: 5,
     status: 'open' as const,
@@ -46,6 +126,8 @@ export const mockBars = [
     location: '321 River Rd, Brooklyn, NY 11201',
     lat: 40.7033,
     lng: -73.9903,
+    category: 'entertainment',
+    subcategory: 'bars',
     todayOpenVotes: 23,
     todayCloseVotes: 28,
     status: 'closed' as const,
@@ -57,12 +139,56 @@ export const mockBars = [
     location: '654 5th Ave, New York, NY 10019',
     lat: 40.7580,
     lng: -73.9855,
+    category: 'sports-recreation',
+    subcategory: 'sports-bars',
     todayOpenVotes: 89,
     todayCloseVotes: 3,
     status: 'open' as const,
     totalVotes: 3421
   },
+  {
+    id: '6',
+    name: 'Electric Dreams Nightclub',
+    location: '789 Club St, New York, NY 10013',
+    lat: 40.7205,
+    lng: -74.0050,
+    category: 'entertainment',
+    subcategory: 'nightclubs',
+    todayOpenVotes: 102,
+    todayCloseVotes: 8,
+    status: 'open' as const,
+    totalVotes: 4567
+  },
+  {
+    id: '7',
+    name: 'Bella Italia Restaurant',
+    location: '234 Italian Way, New York, NY 10012',
+    lat: 40.7259,
+    lng: -73.9965,
+    category: 'food-dining',
+    subcategory: 'restaurants',
+    todayOpenVotes: 56,
+    todayCloseVotes: 4,
+    status: 'open' as const,
+    totalVotes: 2890
+  },
+  {
+    id: '8',
+    name: 'Urban Fitness Center',
+    location: '567 Health Ave, New York, NY 10018',
+    lat: 40.7549,
+    lng: -73.9925,
+    category: 'sports-recreation',
+    subcategory: 'gyms',
+    todayOpenVotes: 78,
+    todayCloseVotes: 2,
+    status: 'open' as const,
+    totalVotes: 3201
+  },
 ];
+
+// Keep backward compatibility
+export const mockBars = mockVenues;
 
 // Mock Users Data
 export const mockUsers = [
@@ -169,7 +295,7 @@ export const mockNotifications = [
   {
     id: '1',
     type: 'new_location' as const,
-    title: 'New Location Added',
+    title: 'New Venue Added',
     message: 'John Smith added "The Craft Beer House" to the app',
     timestamp: '5 minutes ago',
     read: false
@@ -212,31 +338,39 @@ export const mockNotifications = [
 export const mockRecentLocations = [
   {
     id: '1',
-    barName: 'The Craft Beer House',
+    venueName: 'The Craft Beer House',
     location: '234 West St, New York, NY 10014',
     addedBy: 'John Smith',
-    timestamp: '2 hours ago'
+    timestamp: '2 hours ago',
+    category: 'Entertainment',
+    subcategory: 'Bars'
   },
   {
     id: '2',
-    barName: 'Moonlight Cocktail Bar',
+    venueName: 'Moonlight Cocktail Bar',
     location: '567 East Ave, Brooklyn, NY 11215',
     addedBy: 'Sarah Johnson',
-    timestamp: '5 hours ago'
+    timestamp: '5 hours ago',
+    category: 'Entertainment',
+    subcategory: 'Bars'
   },
   {
     id: '3',
-    barName: 'The Irish Pub',
+    venueName: 'The Irish Pub',
     location: '890 Madison Ave, New York, NY 10021',
     addedBy: 'Mike Davis',
-    timestamp: '1 day ago'
+    timestamp: '1 day ago',
+    category: 'Entertainment',
+    subcategory: 'Bars'
   },
   {
     id: '4',
-    barName: 'Rooftop Lounge',
+    venueName: 'Rooftop Lounge',
     location: '432 Lexington Ave, New York, NY 10017',
     addedBy: 'Emily Brown',
-    timestamp: '2 days ago'
+    timestamp: '2 days ago',
+    category: 'Entertainment',
+    subcategory: 'Live Music Venues'
   },
 ];
 
@@ -246,35 +380,35 @@ export const mockRecentActivities = [
     id: '1',
     userName: 'John Smith',
     action: 'voted open' as const,
-    barName: 'The Blue Moon Bar',
+    venueName: 'The Blue Moon Bar',
     timestamp: '5 minutes ago'
   },
   {
     id: '2',
     userName: 'Sarah Johnson',
     action: 'voted closed' as const,
-    barName: 'Sunset Lounge',
+    venueName: 'Sunset Lounge',
     timestamp: '12 minutes ago'
   },
   {
     id: '3',
     userName: 'Mike Davis',
     action: 'voted open' as const,
-    barName: 'The Golden Gate Pub',
+    venueName: 'The Golden Gate Pub',
     timestamp: '30 minutes ago'
   },
   {
     id: '4',
     userName: 'Emily Brown',
     action: 'voted open' as const,
-    barName: 'Downtown Sports Bar',
+    venueName: 'Downtown Sports Bar',
     timestamp: '1 hour ago'
   },
   {
     id: '5',
     userName: 'David Wilson',
     action: 'voted closed' as const,
-    barName: 'Riverside Tavern',
+    venueName: 'Riverside Tavern',
     timestamp: '2 hours ago'
   },
 ];

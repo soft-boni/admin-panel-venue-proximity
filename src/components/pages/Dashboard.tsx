@@ -11,14 +11,14 @@ export function Dashboard() {
   const averageVotesPerUser = (totalVotes / totalUsers).toFixed(1);
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8">
         <h1 className="text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-500">Welcome back! Here's what's happening with your app.</p>
+        <p className="text-gray-500"> Welcome back! Here's what's happening with your app.</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm text-gray-500">Total Venues</CardTitle>
@@ -65,7 +65,7 @@ export function Dashboard() {
       </div>
 
       {/* Recent Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Recent New Locations */}
         <Card>
           <CardHeader>
@@ -109,12 +109,10 @@ export function Dashboard() {
             <div className="space-y-4">
               {mockRecentActivities.map((activity) => (
                 <div key={activity.id} className="flex items-start gap-3 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    activity.action === 'voted open' ? 'bg-green-100' : 'bg-red-100'
-                  }`}>
-                    <Activity className={`w-5 h-5 ${
-                      activity.action === 'voted open' ? 'text-green-600' : 'text-red-600'
-                    }`} />
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${activity.action === 'voted open' ? 'bg-green-100' : 'bg-red-100'
+                    }`}>
+                    <Activity className={`w-5 h-5 ${activity.action === 'voted open' ? 'text-green-600' : 'text-red-600'
+                      }`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-gray-900">

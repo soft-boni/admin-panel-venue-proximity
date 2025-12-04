@@ -50,10 +50,10 @@ export function AdminLayout() {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed top-4 left-4 z-50 lg:hidden"
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="fixed top-4 left-4 z-30 lg:hidden"
+        onClick={() => setIsMobileMenuOpen(true)}
       >
-        {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        <Menu className="w-5 h-5" />
       </Button>
 
       {/* Mobile Overlay */}
@@ -71,8 +71,16 @@ export function AdminLayout() {
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="h-16 flex items-center border-b border-gray-200 px-6">
+        <div className="h-16 flex items-center justify-between border-b border-gray-200 px-6">
           <h1 className="text-gray-900 text-[20px] font-bold">Venue Proximity</h1>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </Button>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">

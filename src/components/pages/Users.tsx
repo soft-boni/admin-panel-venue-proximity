@@ -29,7 +29,7 @@ import {
 } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { mockUsers } from '../../utils/mockData';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function Users() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,7 +42,7 @@ export function Users() {
       user.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesStatus =
       statusFilter === 'all' ||
       (statusFilter === 'active' && user.active) ||

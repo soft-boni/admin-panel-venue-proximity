@@ -10,14 +10,14 @@ import {
 import { ScrollArea } from '../ui/scroll-area';
 import { Separator } from '../ui/separator';
 import { mockNotifications } from '../../utils/mockData';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function Header() {
   const [notifications, setNotifications] = useState(mockNotifications);
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const handleMarkAsRead = (id: string) => {
-    setNotifications(notifications.map(n => 
+    setNotifications(notifications.map(n =>
       n.id === id ? { ...n, read: true } : n
     ));
     toast.success('Notification marked as read');
@@ -39,15 +39,15 @@ export function Header() {
         <h2 className="text-gray-900 text-[20px] hidden md:block">Admin Dashboard</h2>
         <h2 className="text-gray-900 text-[16px] md:hidden">Dashboard</h2>
       </div>
-      
+
       <div className="flex items-center gap-2 md:gap-4">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <Badge 
-                  variant="destructive" 
+                <Badge
+                  variant="destructive"
                   className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs"
                 >
                   {unreadCount}
@@ -87,7 +87,7 @@ export function Header() {
                 </div>
               </div>
             </div>
-            
+
             <ScrollArea className="h-96">
               {notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 px-4">
@@ -99,9 +99,8 @@ export function Header() {
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`p-4 hover:bg-gray-50 transition-colors ${
-                        !notification.read ? 'bg-blue-50/50' : ''
-                      }`}
+                      className={`p-4 hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-blue-50/50' : ''
+                        }`}
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-1">

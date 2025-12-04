@@ -17,7 +17,7 @@ export function Header() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const handleMarkAsRead = (id: string) => {
-    setNotifications(notifications.map(n =>
+    setNotifications(notifications.map(n => 
       n.id === id ? { ...n, read: true } : n
     ));
     toast.success('Notification marked as read');
@@ -34,19 +34,20 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-4 md:px-8">
-      <div className="flex items-center gap-4 ml-14 md:ml-0">
+    <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-4 md:px-8 lg:pl-8">
+      <div className="flex items-center gap-4 lg:ml-0 ml-12">
         <h2 className="text-gray-900 text-[20px] hidden md:block">Admin Dashboard</h2>
+        <h2 className="text-gray-900 text-[16px] md:hidden">Dashboard</h2>
       </div>
-
+      
       <div className="flex items-center gap-2 md:gap-4">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <Badge
-                  variant="destructive"
+                <Badge 
+                  variant="destructive" 
                   className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center p-0 text-xs"
                 >
                   {unreadCount}
@@ -54,7 +55,7 @@ export function Header() {
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 sm:w-96 p-0" align="end">
+          <PopoverContent className="w-[calc(100vw-2rem)] md:w-96 p-0" align="end">
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h3 className="text-gray-900">Notifications</h3>
@@ -67,7 +68,8 @@ export function Header() {
                       className="text-xs"
                     >
                       <Check className="w-3 h-3 mr-1" />
-                      Mark all read
+                      <span className="hidden sm:inline">Mark all read</span>
+                      <span className="sm:hidden">All</span>
                     </Button>
                   )}
                   {notifications.length > 0 && (
@@ -78,13 +80,14 @@ export function Header() {
                       className="text-xs"
                     >
                       <X className="w-3 h-3 mr-1" />
-                      Clear all
+                      <span className="hidden sm:inline">Clear all</span>
+                      <span className="sm:hidden">Clear</span>
                     </Button>
                   )}
                 </div>
               </div>
             </div>
-
+            
             <ScrollArea className="h-96">
               {notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 px-4">
@@ -96,8 +99,9 @@ export function Header() {
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`p-4 hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-blue-50/50' : ''
-                        }`}
+                      className={`p-4 hover:bg-gray-50 transition-colors ${
+                        !notification.read ? 'bg-blue-50/50' : ''
+                      }`}
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-1">
@@ -129,10 +133,10 @@ export function Header() {
           </PopoverContent>
         </Popover>
 
-        <Separator orientation="vertical" className="h-8 hidden sm:block" />
+        <Separator orientation="vertical" className="h-8 hidden md:block" />
 
         <div className="flex items-center gap-2 md:gap-3">
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm">
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
             A
           </div>
           <div className="text-sm hidden sm:block">

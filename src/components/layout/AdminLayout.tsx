@@ -34,8 +34,8 @@ export function AdminLayout() {
     }
   }, [navigate]);
 
-  // Close mobile menu when route changes
   useEffect(() => {
+    // Close mobile menu when route changes
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
@@ -47,41 +47,30 @@ export function AdminLayout() {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsMobileMenuOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-white border border-gray-200 shadow-sm hover:bg-gray-50"
-        aria-label="Open menu"
+      <Button
+        variant="ghost"
+        size="icon"
+        className="fixed top-4 left-4 z-50 lg:hidden"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
-        <Menu className="w-6 h-6 text-gray-900" />
-      </button>
+        {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </Button>
 
-      {/* Mobile Backdrop */}
+      {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={cn(
-        "w-64 bg-white border-r border-gray-200 flex flex-col",
-        // Mobile: fixed overlay
-        "fixed md:static inset-y-0 left-0 z-50",
-        "transition-transform duration-300 ease-in-out",
-        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-      )}>
-        {/* Mobile Close Button */}
-        <div className="md:hidden absolute top-4 right-4">
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 rounded-lg hover:bg-gray-100"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5 text-gray-900" />
-          </button>
-        </div>
-
+      <aside
+        className={cn(
+          "fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 lg:translate-x-0",
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
         <div className="h-16 flex items-center border-b border-gray-200 px-6">
           <h1 className="text-gray-900 text-[20px] font-bold">Venue Proximity</h1>
         </div>
@@ -121,7 +110,7 @@ export function AdminLayout() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden md:ml-0">
+      <div className="flex-1 flex flex-col overflow-hidden w-full lg:w-auto">
         <Header />
         <main className="flex-1 overflow-auto">
           <Outlet />

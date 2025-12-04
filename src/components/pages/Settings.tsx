@@ -34,17 +34,17 @@ export function Settings() {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8">
         <h1 className="text-gray-900 mb-2">Settings</h1>
-        <p className="text-gray-500">Manage your account settings and preferences.</p>
+        <p className="text-gray-500 text-sm md:text-base">Manage your account settings and preferences.</p>
       </div>
 
       <Tabs defaultValue="preferences" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
-          <TabsTrigger value="password">Change Password</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="preferences" className="text-xs md:text-sm">Preferences</TabsTrigger>
+          <TabsTrigger value="password" className="text-xs md:text-sm">Password</TabsTrigger>
+          <TabsTrigger value="security" className="text-xs md:text-sm">Security</TabsTrigger>
         </TabsList>
 
         {/* Preferences Tab */}
@@ -52,15 +52,15 @@ export function Settings() {
           <Card>
             <CardHeader>
               <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 Manage how you receive notifications about app activities.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
                   <Label>Email Notifications</Label>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs md:text-sm text-gray-500">
                     Receive email updates about new locations and activities
                   </p>
                 </div>
@@ -72,10 +72,10 @@ export function Settings() {
 
               <Separator />
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
                   <Label>Push Notifications</Label>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs md:text-sm text-gray-500">
                     Receive push notifications for important updates
                   </p>
                 </div>
@@ -107,7 +107,7 @@ export function Settings() {
               </div>
 
               <div className="flex justify-end">
-                <Button onClick={handleSavePreferences}>
+                <Button onClick={handleSavePreferences} className="w-full md:w-auto">
                   <Save className="w-4 h-4 mr-2" />
                   Save Preferences
                 </Button>
@@ -121,7 +121,7 @@ export function Settings() {
           <Card>
             <CardHeader>
               <CardTitle>Change Password</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 Update your password to keep your account secure.
               </CardDescription>
             </CardHeader>
@@ -157,7 +157,7 @@ export function Settings() {
                   />
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 md:p-4">
                   <p className="text-sm text-blue-900">Password Requirements:</p>
                   <ul className="text-xs text-blue-700 mt-2 space-y-1 list-disc list-inside">
                     <li>At least 8 characters long</li>
@@ -168,7 +168,7 @@ export function Settings() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit">
+                  <Button type="submit" className="w-full md:w-auto">
                     <Lock className="w-4 h-4 mr-2" />
                     Change Password
                   </Button>
@@ -183,19 +183,19 @@ export function Settings() {
           <Card>
             <CardHeader>
               <CardTitle>Two-Factor Authentication</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 Add an extra layer of security to your account.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-blue-600" />
+              <div className="flex items-center justify-between gap-4 p-3 md:p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-3 md:gap-4 flex-1">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
                   </div>
-                  <div>
-                    <p className="text-gray-900">Two-Factor Authentication</p>
-                    <p className="text-sm text-gray-500">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm md:text-base text-gray-900">Two-Factor Authentication</p>
+                    <p className="text-xs md:text-sm text-gray-500">
                       {twoFactorEnabled ? 'Currently enabled' : 'Currently disabled'}
                     </p>
                   </div>
@@ -208,15 +208,15 @@ export function Settings() {
                   <Separator />
                   <div className="space-y-2">
                     <Label>Recovery Codes</Label>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs md:text-sm text-gray-500">
                       Store these codes in a safe place. You can use them to access your account
                       if you lose access to your authentication device.
                     </p>
-                    <div className="bg-gray-50 rounded-lg p-4 grid grid-cols-2 gap-2">
-                      <code className="text-sm">ABCD-1234-EFGH</code>
-                      <code className="text-sm">IJKL-5678-MNOP</code>
-                      <code className="text-sm">QRST-9012-UVWX</code>
-                      <code className="text-sm">YZAB-3456-CDEF</code>
+                    <div className="bg-gray-50 rounded-lg p-3 md:p-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <code className="text-xs md:text-sm">ABCD-1234-EFGH</code>
+                      <code className="text-xs md:text-sm">IJKL-5678-MNOP</code>
+                      <code className="text-xs md:text-sm">QRST-9012-UVWX</code>
+                      <code className="text-xs md:text-sm">YZAB-3456-CDEF</code>
                     </div>
                     <Button variant="outline" className="w-full">
                       Generate New Recovery Codes
@@ -229,21 +229,21 @@ export function Settings() {
 
               <div className="space-y-2">
                 <Label>Active Sessions</Label>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-xs md:text-sm text-gray-500 mb-4">
                   Manage devices where you're currently logged in.
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
+                  <div className="flex items-center justify-between gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900">Current Session</p>
-                      <p className="text-xs text-gray-500">Chrome on macOS • New York, USA</p>
+                      <p className="text-xs text-gray-500 truncate">Chrome on macOS • New York, USA</p>
                     </div>
                     <Badge variant="default">Active</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
+                  <div className="flex items-center justify-between gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900">Mobile Device</p>
-                      <p className="text-xs text-gray-500">iOS App • Last active 2 hours ago</p>
+                      <p className="text-xs text-gray-500 truncate">iOS App • Last active 2 hours ago</p>
                     </div>
                     <Button variant="outline" size="sm">
                       Revoke

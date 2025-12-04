@@ -83,13 +83,13 @@ export function Advertisement() {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-gray-900 mb-2">Advertisement Management</h1>
-          <p className="text-gray-500">Create and manage location-based promotional ads with proximity targeting.</p>
+          <p className="text-gray-500 text-sm md:text-base">Create and manage location-based promotional ads with proximity targeting.</p>
         </div>
-        <Button onClick={() => setShowCreateModal(true)}>
+        <Button onClick={() => setShowCreateModal(true)} className="w-full md:w-auto">
           <Plus className="w-4 h-4 mr-2" />
           Create Ad
         </Button>
@@ -100,111 +100,211 @@ export function Advertisement() {
           <CardTitle>Active Advertisements</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Advertisement</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Radius</TableHead>
-                <TableHead>Runtime</TableHead>
-                <TableHead className="text-center">Impressions</TableHead>
-                <TableHead className="text-center">Clicks</TableHead>
-                <TableHead className="text-center">CTR</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead className="text-center">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mockAds.map((ad) => (
-                <TableRow key={ad.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <ImageWithFallback
-                        src={ad.image}
-                        alt={ad.title}
-                        className="w-16 h-16 rounded-lg object-cover"
-                      />
-                      <div>
-                        <p className="text-gray-900">{ad.title}</p>
-                        <p className="text-sm text-gray-500 line-clamp-1">{ad.description}</p>
+          {/* Desktop Table View */}
+          <div className="hidden lg:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Advertisement</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead>Radius</TableHead>
+                  <TableHead>Runtime</TableHead>
+                  <TableHead className="text-center">Impressions</TableHead>
+                  <TableHead className="text-center">Clicks</TableHead>
+                  <TableHead className="text-center">CTR</TableHead>
+                  <TableHead className="text-center">Status</TableHead>
+                  <TableHead className="text-center">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mockAds.map((ad) => (
+                  <TableRow key={ad.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <ImageWithFallback
+                          src={ad.image}
+                          alt={ad.title}
+                          className="w-16 h-16 rounded-lg object-cover"
+                        />
+                        <div>
+                          <p className="text-gray-900">{ad.title}</p>
+                          <p className="text-sm text-gray-500 line-clamp-1">{ad.description}</p>
+                        </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-start gap-2">
+                        <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700 text-sm">{ad.location}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{ad.radius} miles</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Calendar className="w-4 h-4" />
+                        <span>
+                          {new Date(ad.startDate).toLocaleDateString()} -{' '}
+                          {new Date(ad.endDate).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="text-gray-900">{ad.impressions.toLocaleString()}</div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="text-gray-900">{ad.clicks.toLocaleString()}</div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100">
+                        {ad.ctr}%
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant={ad.status === 'running' ? 'default' : 'secondary'}>
+                        {ad.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex gap-2 justify-center">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleToggleAdStatus(ad.id, ad.status)}
+                          className={ad.status === 'running' ? 'text-orange-600 hover:text-orange-700' : 'text-green-600 hover:text-green-700'}
+                        >
+                          {ad.status === 'running' ? (
+                            <Square className="w-4 h-4" />
+                          ) : (
+                            <Play className="w-4 h-4" />
+                          )}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setEditingAd(ad)}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          onClick={() => setDeletingAd(ad)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="lg:hidden space-y-4">
+            {mockAds.map((ad) => (
+              <Card key={ad.id} className="border border-gray-200">
+                <CardContent className="p-4">
+                  <div className="flex gap-3 mb-3">
+                    <ImageWithFallback
+                      src={ad.image}
+                      alt={ad.title}
+                      className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-gray-900 mb-1">{ad.title}</h3>
+                      <p className="text-sm text-gray-500 line-clamp-2">{ad.description}</p>
                     </div>
-                  </TableCell>
-                  <TableCell>
+                  </div>
+
+                  <div className="space-y-2 mb-3">
                     <div className="flex items-start gap-2">
                       <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700 text-sm">{ad.location}</p>
+                      <p className="text-sm text-gray-700">{ad.location}</p>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{ad.radius} miles</Badge>
-                  </TableCell>
-                  <TableCell>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <Calendar className="w-4 h-4" />
                       <span>
-                        {new Date(ad.startDate).toLocaleDateString()} -{' '}
-                        {new Date(ad.endDate).toLocaleDateString()}
+                        {new Date(ad.startDate).toLocaleDateString()} - {new Date(ad.endDate).toLocaleDateString()}
                       </span>
                     </div>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <div className="text-gray-900">{ad.impressions.toLocaleString()}</div>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <div className="text-gray-900">{ad.clicks.toLocaleString()}</div>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100">
-                      {ad.ctr}%
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge variant={ad.status === 'running' ? 'default' : 'secondary'}>
-                      {ad.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex gap-2 justify-center">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleToggleAdStatus(ad.id, ad.status)}
-                        className={ad.status === 'running' ? 'text-orange-600 hover:text-orange-700' : 'text-green-600 hover:text-green-700'}
-                      >
-                        {ad.status === 'running' ? (
-                          <Square className="w-4 h-4" />
-                        ) : (
-                          <Play className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setEditingAd(ad)}
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={() => setDeletingAd(ad)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
+                    <div className="bg-gray-50 rounded p-2">
+                      <p className="text-gray-500 text-xs">Radius</p>
+                      <p className="text-gray-900">{ad.radius} miles</p>
                     </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    <div className="bg-gray-50 rounded p-2">
+                      <p className="text-gray-500 text-xs">Status</p>
+                      <Badge variant={ad.status === 'running' ? 'default' : 'secondary'} className="mt-1">
+                        {ad.status}
+                      </Badge>
+                    </div>
+                    <div className="bg-gray-50 rounded p-2">
+                      <p className="text-gray-500 text-xs">Impressions</p>
+                      <p className="text-gray-900">{ad.impressions.toLocaleString()}</p>
+                    </div>
+                    <div className="bg-gray-50 rounded p-2">
+                      <p className="text-gray-500 text-xs">Clicks</p>
+                      <p className="text-gray-900">{ad.clicks.toLocaleString()}</p>
+                    </div>
+                    <div className="bg-gray-50 rounded p-2">
+                      <p className="text-gray-500 text-xs">CTR</p>
+                      <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100 mt-1">
+                        {ad.ctr}%
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleToggleAdStatus(ad.id, ad.status)}
+                      className={`flex-1 ${ad.status === 'running' ? 'text-orange-600 hover:text-orange-700' : 'text-green-600 hover:text-green-700'}`}
+                    >
+                      {ad.status === 'running' ? (
+                        <>
+                          <Square className="w-4 h-4 mr-1" />
+                          Stop
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4 mr-1" />
+                          Run
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setEditingAd(ad)}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      onClick={() => setDeletingAd(ad)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
       {/* Create Ad Modal */}
       <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Create Advertisement</DialogTitle>
             <DialogDescription>
@@ -282,19 +382,19 @@ export function Advertisement() {
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCreateModal(false)}>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            <Button variant="outline" onClick={() => setShowCreateModal(false)} className="w-full sm:w-auto">
               Cancel
             </Button>
-            <Button onClick={() => handleCreateAd(false)}>Save Ad</Button>
-            <Button onClick={() => handleCreateAd(true)}>Create and Run Ad</Button>
+            <Button onClick={() => handleCreateAd(false)} className="w-full sm:w-auto">Save Ad</Button>
+            <Button onClick={() => handleCreateAd(true)} className="w-full sm:w-auto">Create and Run Ad</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Edit Ad Modal */}
       <Dialog open={!!editingAd} onOpenChange={() => setEditingAd(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Advertisement</DialogTitle>
             <DialogDescription>
@@ -372,11 +472,11 @@ export function Advertisement() {
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditingAd(null)}>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            <Button variant="outline" onClick={() => setEditingAd(null)} className="w-full sm:w-auto">
               Cancel
             </Button>
-            <Button onClick={handleUpdateAd}>Update Ad</Button>
+            <Button onClick={handleUpdateAd} className="w-full sm:w-auto">Update Ad</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -8,7 +8,7 @@ import { Switch } from '../ui/switch';
 import { Separator } from '../ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Badge } from '../ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function Settings() {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
@@ -57,18 +57,6 @@ export function Settings() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between gap-4">
-                <div className="space-y-0.5 flex-1">
-                  <Label>Email Notifications</Label>
-                  <p className="text-xs md:text-sm text-gray-500">
-                    Receive email updates about new locations and activities
-                  </p>
-                </div>
-                <Switch
-                  checked={emailNotifications}
-                  onCheckedChange={setEmailNotifications}
-                />
-              </div>
 
               <Separator />
 

@@ -14,6 +14,7 @@ export function Settings() {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(false);
+  const [searchBarEnabled, setSearchBarEnabled] = useState(true);
 
   const handleSavePreferences = () => {
     toast.success('Preferences saved successfully');
@@ -49,6 +50,29 @@ export function Settings() {
 
         {/* Preferences Tab */}
         <TabsContent value="preferences">
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle>App Features</CardTitle>
+              <CardDescription className="text-sm">
+                Control which features are enabled in the mobile app.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
+                  <Label>Search Bar</Label>
+                  <p className="text-xs md:text-sm text-gray-500">
+                    Enable or disable the search bar in the mobile app
+                  </p>
+                </div>
+                <Switch
+                  checked={searchBarEnabled}
+                  onCheckedChange={setSearchBarEnabled}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle>Notification Preferences</CardTitle>

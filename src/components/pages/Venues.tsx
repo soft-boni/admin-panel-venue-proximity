@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Filter, Search, Plus, Trash2 } from 'lucide-react';
+import { MapPin, Filter, Search, Plus, Trash2, Upload, Image as ImageIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -33,12 +33,14 @@ export function Venues() {
   const [selectedVenue, setSelectedVenue] = useState<typeof mockVenues[0] | null>(null);
   const [showAddVenue, setShowAddVenue] = useState(false);
   const [showMapModal, setShowMapModal] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
     location: '',
     category: '',
     subcategory: '',
+    photo: null as File | null,
   });
 
   const filteredVenues = mockVenues.filter((venue) => {
@@ -86,7 +88,7 @@ export function Venues() {
     }
     toast.success('Venue added successfully');
     setShowAddVenue(false);
-    setFormData({ name: '', location: '', category: '', subcategory: '' });
+    setFormData({ name: '', location: '', category: '', subcategory: '', photo: null });
   };
 
   const handleDeleteVenue = (venueId: string, venueName: string) => {
@@ -191,6 +193,7 @@ export function Venues() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-24">Thumbnail</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>Location</TableHead>
@@ -212,6 +215,11 @@ export function Venues() {
                   
                   return (
                     <TableRow key={venue.id}>
+                      <TableCell>
+                        <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                          <ImageIcon className="w-8 h-8 text-gray-400" />
+                        </div>
+                      </TableCell>
                       <TableCell>
                         <div>
                           <p className="text-gray-900">{venue.name}</p>
@@ -295,10 +303,18 @@ export function Venues() {
               return (
                 <Card key={venue.id} className="border border-gray-200">
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <h3 className="text-gray-900 mb-1">{venue.name}</h3>
-                        <div className="flex flex-wrap gap-1 mb-2">
+                    <div className="flex gap-3 mb-3">
+                      <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <ImageIcon className="w-10 h-10 text-gray-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-1">
+                          <h3 className="text-gray-900 truncate">{venue.name}</h3>
+                          <Badge variant={venue.status === 'open' ? 'default' : 'secondary'} className="ml-2 flex-shrink-0">
+                            {venue.status}
+                          </Badge>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
                           <Badge variant="outline" className="text-xs">
                             {getCategoryName(venue.category)}
                           </Badge>
@@ -307,9 +323,6 @@ export function Venues() {
                           </span>
                         </div>
                       </div>
-                      <Badge variant={venue.status === 'open' ? 'default' : 'secondary'}>
-                        {venue.status}
-                      </Badge>
                     </div>
 
                     <div className="flex items-start gap-2 mb-3">
@@ -430,6 +443,30 @@ export function Venues() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              <Label htmlFor="photo">Photo</Label>
+              <Input
+                id="photo"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setFormData({ ...formData, photo: file });
+                    setPhotoPreview(URL.createObjectURL(file));
+                  }
+                }}
+              />
+              {photoPreview && (
+                <div className="mt-2">
+                  <img
+                    src={photoPreview}
+                    alt="Venue photo preview"
+                    className="w-full h-40 object-cover rounded"
+                  />
+                </div>
+              )}
             </div>
             <div className="flex gap-2 justify-end pt-4">
               <Button variant="outline" onClick={() => setShowAddVenue(false)}>
